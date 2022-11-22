@@ -8,8 +8,18 @@ import Login from './layouts/Login'
 import Register from './layouts/Register'
 import PrivateRoute from './utils/PrivateRoute'
 import CreatePost from './components/CreatePost'
+import { useDispatch } from 'react-redux'
+import { checkAuth } from './redux/slices/userSlice'
+import { useEffect } from 'react'
 
 function App() {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      dispatch(checkAuth())
+    }
+  }, [])
   return (
     <Container maxWidth='xl'>
       <Header />

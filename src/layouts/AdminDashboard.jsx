@@ -39,11 +39,11 @@ const AdminDashboard = () => {
         </NavLink>
       </div>
       <div className='grid ml-[220px] gap-2 '>
+        {/* <ItemInfo />
         <ItemInfo />
         <ItemInfo />
         <ItemInfo />
-        <ItemInfo />
-        <ItemInfo />
+        <ItemInfo /> */}
         <Outlet />
       </div>
     </div>

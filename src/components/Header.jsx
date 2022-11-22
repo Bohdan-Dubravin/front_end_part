@@ -1,12 +1,25 @@
 import { Button, InputAdornment, TextField } from '@mui/material'
-import React, { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import logo from '../assets/images/logo.svg'
 import SearchIcon from '@mui/icons-material/Search'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { logoutUser } from '../redux/slices/userSlice'
 const Header = () => {
   const [searh, setSearch] = useState('')
-  const { role, username } = useSelector((state) => state.user)
+  const { role, username, auth } = useSelector((state) => state.user)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const logout = async () => {
+    const response = await dispatch(logoutUser())
+    console.log(response)
+
+    if (!auth) {
+      navigate('/')
+    }
+  }
+
   return (
     <header className='flex items-center justify-between h-[60px] border-b-2'>
       <Link className='block p-[15px]' to='/'>
@@ -33,10 +46,10 @@ const Header = () => {
         </NavLink>
       </nav>
 
-      <div className='flex items-center'>
+      <div className='flex items-center relative'>
         <TextField
           className={`rounded-2xl w-[200px] font-semibold transition-all ${
-            searh.length && 'w-[150%]'
+            searh.length && 'absolute right-[200px] left-[-200px]'
           }`}
           id='filled-basic'
           label='Search'
@@ -50,12 +63,19 @@ const Header = () => {
           }}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <Link to='/login'>
-          <Button className='ml-[16px] font-bold bg-sky-500 text-white hover:bg-sky-600'>
-            Login
-          </Button>
-        </Link>
-        {role === 'admin' || role === 'manager' ? (
+
+        {(role === 'admin' || role === 'manager') && (
+          <Link to='/admin'>
+            <Button
+              className='ml-[16px] font-semibold text-[#fff] bg-[#d32f2f]'
+              variant='contained'
+              color='error'
+            >
+              Admin Dash
+            </Button>
+          </Link>
+        )}
+        {!auth && (
           <Link to='/register'>
             <Button
               className='ml-[16px] font-semibold'
@@ -65,16 +85,22 @@ const Header = () => {
               Register
             </Button>
           </Link>
-        ) : (
+        )}
+        {!auth ? (
           <Link to='/login'>
-            <Button
-              className='ml-[16px] font-semibold'
-              variant='outlined'
-              color='secondary'
-            >
-              Logout
+            <Button className='ml-[16px] font-bold bg-sky-500 text-white hover:bg-sky-600'>
+              Login
             </Button>
           </Link>
+        ) : (
+          <Button
+            className='ml-[16px] font-semibold'
+            variant='outlined'
+            color='secondary'
+            onClick={() => logout()}
+          >
+            Logout
+          </Button>
         )}
       </div>
     </header>
