@@ -34,7 +34,7 @@ export const registerUser = createAsyncThunk(
   }
 )
 
-export const logoutUser = createAsyncThunk('/loout', async (args) => {
+export const logoutUser = createAsyncThunk('/loout', async () => {
   try {
     const response = await api.post('/auth/logout')
     localStorage.removeItem('token')
@@ -105,30 +105,6 @@ export const userSlice = createSlice({
         state.role = ''
         state.auth = false
       })
-
-    // [loginUser.pending]: (state, action) => {
-    //   state.user.status = 'load'
-    // },
-    // [loginUser.rejected]: (state, action) => {
-    //   state.user.status = 'error'
-    // },
-    // [loginUser.fulfilled]: (state, action) => {
-    //   const { username, role } = action.payload.user
-    //   state.user.status = ''
-    //   state.user.username = username
-    //   state.user.role = role
-    // },
-    // [checkAuth.fulfilled]: (state, action) => {
-    //   const { username, role } = action.payload.user
-    //   state.user.status = ''
-    //   state.user.username = username
-    //   state.user.role = role
-    // },
-    // [checkAuth.rejected]: (state, action) => {
-    //   state.user.status = 'error'
-    //   state.user.username = ''
-    //   state.user.role = ''
-    // },
   },
 })
 

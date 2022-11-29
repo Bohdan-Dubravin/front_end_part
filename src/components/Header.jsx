@@ -1,12 +1,12 @@
 import { Button, InputAdornment, TextField } from '@mui/material'
-import { useState } from 'react'
+
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import logo from '../assets/images/logo.svg'
 import SearchIcon from '@mui/icons-material/Search'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser } from '../redux/slices/userSlice'
+import AppUser from './AppUser'
 const Header = () => {
-  const [searh, setSearch] = useState('')
   const { role, username, auth } = useSelector((state) => state.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -34,6 +34,12 @@ const Header = () => {
         </NavLink>
         <NavLink
           className={(navData) => (navData.isActive ? 'active' : 'link')}
+          to='/news'
+        >
+          News
+        </NavLink>
+        <NavLink
+          className={(navData) => (navData.isActive ? 'active' : 'link')}
           to='/services'
         >
           Services
@@ -48,9 +54,7 @@ const Header = () => {
 
       <div className='flex items-center relative'>
         <TextField
-          className={`rounded-2xl w-[200px] font-semibold transition-all ${
-            searh.length && 'absolute right-[200px] left-[-200px]'
-          }`}
+          className={`rounded-2xl w-[200px] font-semibold transition-all `}
           id='filled-basic'
           label='Search'
           size='small'
@@ -61,7 +65,6 @@ const Header = () => {
               </InputAdornment>
             ),
           }}
-          onChange={(e) => setSearch(e.target.value)}
         />
 
         {(role === 'admin' || role === 'manager') && (
@@ -93,14 +96,7 @@ const Header = () => {
             </Button>
           </Link>
         ) : (
-          <Button
-            className='ml-[16px] font-semibold'
-            variant='outlined'
-            color='secondary'
-            onClick={() => logout()}
-          >
-            Logout
-          </Button>
+          <AppUser />
         )}
       </div>
     </header>

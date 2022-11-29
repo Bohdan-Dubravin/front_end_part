@@ -33,7 +33,7 @@ const Login = () => {
   }
 
   return (
-    <Paper className='mx-auto w-[320px] mt-[20%] p-[20px]'>
+    <Paper className='animate mx-auto w-[320px] mt-[20%] p-[20px]'>
       <Typography className='text-center mb-[10px]' variant='h6'>
         Login
       </Typography>

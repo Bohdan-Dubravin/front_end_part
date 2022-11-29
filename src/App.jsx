@@ -11,6 +11,10 @@ import CreatePost from './components/CreatePost'
 import { useDispatch } from 'react-redux'
 import { checkAuth } from './redux/slices/userSlice'
 import { useEffect } from 'react'
+import Desktops from './layouts/Desktops'
+import FullItem from './layouts/FullItem'
+import News from './layouts/News'
+import FullPost from './layouts/FullPost'
 
 function App() {
   const dispatch = useDispatch()
@@ -27,6 +31,10 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/desktops' element={<Desktops />} />
+        <Route path='/news' element={<News />} />
+        <Route path='/news/post/:id' element={<FullPost />} />
+        <Route path='/desktops/:id' element={<FullItem />} />
         <Route element={<PrivateRoute />}>
           <Route path='/admin' element={<AdminDashboard />}>
             <Route path='createProduct' element={<CreateItem />} />

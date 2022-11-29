@@ -36,11 +36,11 @@ const Corusel = () => {
   }
   return (
     <div>
-      <Slider {...settings}>
+      {/* <Slider {...settings}>
         {Array.from(Array(8)).map((item) => {
           return <Item key={item} />
         })}
-      </Slider>
+      </Slider> */}
     </div>
   )
 }

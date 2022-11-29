@@ -32,4 +32,49 @@ body {
     color: #1976d2;
     text-align: center;
   }
+
+  .gridItems {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill, 240px);
+    column-gap: 20px;
+    row-gap: 30px;
+    margin-bottom: 20px;
+  }
+
+  .gridPosts {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill, 500px);
+    column-gap: 20px;
+    row-gap: 30px;
+    margin-bottom: 20px;
+  }
+
+  @media screen and (max-width: 550px) {
+    .gridPosts {
+      grid-template-columns: repeat(auto-fill, 100%);
+    }
+  }
+
+  @media screen and (max-width: 1280px) and (min-width: 720px) {
+    .gridPosts {
+      grid-template-columns: repeat(auto-fill, 700px);
+    }
+  }
+
+  @keyframes slideInFromLeft {
+    0% {
+      transform: translateY(-50%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 0.9;
+    }
+  }
+
+  .animate {
+    animation: 1s ease-out 0s 1 slideInFromLeft;
+  }
 }
