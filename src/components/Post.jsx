@@ -2,9 +2,14 @@ import { Card, Rating, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 import defaultImage from '../assets/images/default-image.jpg'
 import EyeIcon from '@mui/icons-material/RemoveRedEyeOutlined'
+import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined'
+import ThumbUpIcon from '@mui/icons-material/ThumbUp'
+import { useSelector } from 'react-redux'
 
 const Post = ({ post }) => {
-  const { title, text, imageUrl, _id, viewsCount, likes, dislikes } = post
+  const user = useSelector((state) => state.user)
+  console.log(user)
+  const { title, text, imageUrl, _id, viewsCount } = post
 
   const image = imageUrl ? `http://localhost:5000${imageUrl}` : defaultImage
 

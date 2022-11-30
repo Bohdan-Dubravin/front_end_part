@@ -16,6 +16,7 @@ import { logoutUser } from '../redux/slices/userSlice'
 const AppUser = () => {
   const [showNav, setShowNav] = useState(null)
   const { role, username, auth, avatarUrl } = useSelector((state) => state.user)
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const logout = () => {
@@ -29,7 +30,10 @@ const AppUser = () => {
       <Box onClick={(e) => setShowNav(e.currentTarget)}>
         <Tooltip sx={{ p: 0 }} title='Open settings'>
           <IconButton>
-            <Avatar alt={username.slice(0)} src='' />
+            <Avatar
+              alt={username || 'U'}
+              src={`http://localhost:5000${avatarUrl}`}
+            />
           </IconButton>
         </Tooltip>
         <ExpandMoreIcon />

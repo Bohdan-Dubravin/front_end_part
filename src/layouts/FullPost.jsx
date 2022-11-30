@@ -62,7 +62,7 @@ const FullPost = () => {
         {viewsCount}
       </Typography>
 
-      <CreatePostComment />
+      <CreatePostComment getPost={getPost} />
 
       <Comments user={user} comments={comments} />
     </Card>

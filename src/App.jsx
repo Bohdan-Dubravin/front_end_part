@@ -25,7 +25,7 @@ function App() {
     }
   }, [])
   return (
-    <Container maxWidth='xl'>
+    <Container className='mobile:p-0' maxWidth='xl'>
       <Header />
       <Routes>
         <Route path='/' element={<Home />} />

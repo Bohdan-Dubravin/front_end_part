@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import api from '../../api/config'
-import AuthService from '../../api/services/AuthService'
 
 export const loginUser = createAsyncThunk(
   '/login',
@@ -22,19 +21,25 @@ export const loginUser = createAsyncThunk(
 
 export const registerUser = createAsyncThunk(
   '/register',
-  async ({ username, password, role }, { rejectWithValue }) => {
+  async (userData, { rejectWithValue }) => {
     try {
-      const response = await AuthService.register(username, password, role)
+      const response = await api.post('/auth/register', {
+        ...userData,
+      })
+
+      if (!response.status > 202) {
+        throw new Error(response)
+      }
 
       localStorage.setItem('token', response.data.accessToken)
-      return response.data
+      return response
     } catch (error) {
-      return rejectWithValue(error)
+      return rejectWithValue(error.response)
     }
   }
 )
 
-export const logoutUser = createAsyncThunk('/loout', async () => {
+export const logoutUser = createAsyncThunk('/logout', async () => {
   try {
     const response = await api.post('/auth/logout')
     localStorage.removeItem('token')
@@ -65,6 +70,8 @@ const initialState = {
   status: '',
   role: '',
   auth: false,
+  avatarUrl: null,
+  id: null,
 }
 
 export const userSlice = createSlice({
@@ -104,6 +111,22 @@ export const userSlice = createSlice({
         state.username = null
         state.role = ''
         state.auth = false
+      })
+      .addCase(registerUser.pending, (state, action) => {
+        state.status = 'load'
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.status = 'error'
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        const { username, role, avatarUrl, id } = action.payload.data.user
+        console.log(action.payload)
+        state.status = ''
+        state.username = username
+        state.role = role
+        state.auth = true
+        state.avatarUrl = avatarUrl
+        state.id = id
       })
   },
 })

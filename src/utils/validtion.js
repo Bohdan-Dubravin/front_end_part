@@ -53,4 +53,16 @@ const commentValidation = Yup.object().shape({
   rating: Yup.number().min(1).required('Rate post').max(5),
 })
 
-export { itemValidation, postValidation, commentValidation }
+const registerValidation = Yup.object().shape({
+  username: Yup.string()
+    .min(2, 'User name should have more than 2 characters')
+    .required('Enter User name')
+    .max(25, 'User name should have less than 25 characters'),
+  password: Yup.string()
+    .min(5, 'Password should have more than 5 characters')
+    .required('Enter Password')
+    .max(25, 'Password should have less than 25 characters'),
+  email: Yup.string().email('Enter valid email').required('Enter Password'),
+})
+
+export { itemValidation, postValidation, commentValidation, registerValidation }
