@@ -5,7 +5,7 @@ import Paper from '@mui/material/Paper'
 import LoadingButton from '@mui/lab/LoadingButton'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser } from '../redux/slices/userSlice'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -76,6 +76,12 @@ const Login = () => {
       >
         Login
       </LoadingButton>
+      <Typography className='text-center mt-[10px]' variant='body2'>
+        Don't have an account?{' '}
+        <Link className='text-[#1976d2] font-bold' to='/register'>
+          Sign up
+        </Link>
+      </Typography>
     </Paper>
   )
 }

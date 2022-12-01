@@ -1,21 +1,16 @@
 import { LoadingButton } from '@mui/lab'
-import {
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Paper,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { Button, Paper, TextField, Typography } from '@mui/material'
 import { useState } from 'react'
 import { Formik } from 'formik'
 import api from '../api/config'
 import { postValidation } from '../utils/validtion'
+import { useNavigate } from 'react-router-dom'
 
 const fields = ['title', 'price', 'CPU', 'GPU', 'RAM', 'powerSuplay', 'storage']
 
 const CreatePost = () => {
   const [itemImage, setItemImage] = useState('')
+  const navigate = useNavigate()
 
   const inputChangefile = async (e) => {
     try {
@@ -43,11 +38,14 @@ const CreatePost = () => {
             text: '',
           }}
           validationSchema={postValidation}
-          onSubmit={async (values, { setSubmitting }) => {
+          onSubmit={async (values, { resetForm }) => {
             const newPost = await api.post('/posts/create', {
               ...values,
               imageUrl: itemImage,
             })
+
+            resetForm()
+            navigate(`/news/post/${newPost.data._id}`)
           }}
         >
           {({

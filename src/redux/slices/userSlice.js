@@ -51,12 +51,44 @@ export const logoutUser = createAsyncThunk('/logout', async () => {
 
 export const checkAuth = createAsyncThunk(
   '/checkAuth',
-  async (args, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(`http://localhost:5000/auth/refresh`, {
         withCredentials: true,
       })
       localStorage.setItem('token', response.data.accessToken)
+      return response.data
+    } catch (error) {
+      console.log(error)
+      return rejectWithValue(error)
+    }
+  }
+)
+
+export const likePost = createAsyncThunk(
+  '/likePost',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await api.post(`/posts/like/${id}`, {
+        withCredentials: true,
+      })
+
+      return response.data
+    } catch (error) {
+      console.log(error)
+      return rejectWithValue(error)
+    }
+  }
+)
+
+export const dislikePost = createAsyncThunk(
+  '/dislikePost',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await api.post(`/posts/dislike/${id}`, {
+        withCredentials: true,
+      })
+
       return response.data
     } catch (error) {
       console.log(error)
@@ -72,12 +104,24 @@ const initialState = {
   auth: false,
   avatarUrl: null,
   id: null,
+  likes: [],
+  dislikes: [],
 }
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    likePostState: (state, payload) => {
+      state.likes.push(payload)
+      state.dislikes = state.dislikes.filter((postId) => postId !== payload)
+    },
+
+    dislikePostState: (state, payload) => {
+      state.dislikes.push(payload)
+      state.likes = state.likes.filter((postId) => postId !== payload)
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state, action) => {
@@ -87,11 +131,17 @@ export const userSlice = createSlice({
         state.status = 'error'
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        const { username, role } = action.payload.data.user
+        const { username, role, avatarUrl, id, likes, dislikes } =
+          action.payload
+
         state.status = ''
         state.username = username
         state.role = role
         state.auth = true
+        state.avatarUrl = avatarUrl
+        state.id = id
+        state.likes = likes
+        state.dislikes = dislikes
       })
       .addCase(checkAuth.pending, (state, action) => {
         state.status = 'load'
@@ -100,11 +150,18 @@ export const userSlice = createSlice({
         state.status = 'error'
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
-        const { username, role } = action.payload
+        console.log(action.payload)
+        const { username, role, avatarUrl, id, likes, dislikes } =
+          action.payload
+
         state.status = ''
         state.username = username
         state.role = role
         state.auth = true
+        state.avatarUrl = avatarUrl
+        state.id = id
+        state.likes = likes
+        state.dislikes = dislikes
       })
       .addCase(logoutUser.fulfilled, (state, action) => {
         state.status = ''
@@ -119,18 +176,21 @@ export const userSlice = createSlice({
         state.status = 'error'
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        const { username, role, avatarUrl, id } = action.payload.data.user
-        console.log(action.payload)
+        const { username, role, avatarUrl, id, likes, dislikes } =
+          action.payload.data.user
+
         state.status = ''
         state.username = username
         state.role = role
         state.auth = true
         state.avatarUrl = avatarUrl
         state.id = id
+        state.likes = likes
+        state.dislikes = dislikes
       })
   },
 })
 
-export const { setUser } = userSlice.actions
+export const { likePostState, dislikePostState } = userSlice.actions
 
 export default userSlice.reducer

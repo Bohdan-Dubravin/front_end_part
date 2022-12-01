@@ -31,6 +31,7 @@ api.interceptors.response.use(
       }
     } catch (err) {
       console.log('unauthorised', err)
+      window.location.href = '/login'
     }
     throw error
   }

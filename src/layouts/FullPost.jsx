@@ -1,5 +1,5 @@
-import { Card, List, Rating, Typography } from '@mui/material'
-import { createRoutesFromElements, Link, useParams } from 'react-router-dom'
+import { Card, Rating, Typography } from '@mui/material'
+import { useParams } from 'react-router-dom'
 import defaultImage from '../assets/images/default-image.jpg'
 import EyeIcon from '@mui/icons-material/RemoveRedEyeOutlined'
 import { useEffect, useState } from 'react'
