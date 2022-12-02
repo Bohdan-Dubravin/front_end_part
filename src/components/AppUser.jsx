@@ -11,7 +11,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { logoutUser } from '../redux/slices/userSlice'
+import { logoutUser } from '../redux/slices/authSlice'
 
 const AppUser = () => {
   const [showNav, setShowNav] = useState(null)
@@ -26,7 +26,7 @@ const AppUser = () => {
   }
 
   return (
-    <Box sx={{ flexGrow: 0 }}>
+    <Box className='cursor-pointer' sx={{ flexGrow: 0 }}>
       <Box onClick={(e) => setShowNav(e.currentTarget)}>
         <Tooltip sx={{ p: 0 }} title='Open settings'>
           <IconButton>

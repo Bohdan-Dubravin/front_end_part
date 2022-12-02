@@ -4,7 +4,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import logo from '../assets/images/logo.svg'
 import SearchIcon from '@mui/icons-material/Search'
 import { useDispatch, useSelector } from 'react-redux'
-import { logoutUser } from '../redux/slices/userSlice'
+import { logoutUser } from '../redux/slices/authSlice'
 import AppUser from './AppUser'
 const Header = () => {
   const { role, username, auth } = useSelector((state) => state.user)
@@ -70,11 +70,12 @@ const Header = () => {
         {(role === 'admin' || role === 'manager') && (
           <Link to='/admin'>
             <Button
-              className='ml-[16px] font-semibold text-[#fff] bg-[#d32f2f]'
+              size='small'
+              className='ml-[16px] font-semibold text-[#fff] bg-[#d32f2f] mr-[10px]'
               variant='contained'
               color='error'
             >
-              Admin Dash
+              Admin Panel
             </Button>
           </Link>
         )}

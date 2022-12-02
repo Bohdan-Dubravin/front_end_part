@@ -1,4 +1,4 @@
-import { Card, Rating, Typography } from '@mui/material'
+import { Card, Paper, Rating, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 import defaultImage from '../assets/images/default-image.jpg'
 import EyeIcon from '@mui/icons-material/RemoveRedEyeOutlined'
@@ -6,45 +6,49 @@ import { Box } from '@mui/system'
 import LikesComponent from './LikesComponent'
 
 const Post = ({ post }) => {
-  const { title, text, imageUrl, _id, viewsCount } = post
+  const { title, text, imageUrl, _id, viewsCount, comments } = post
 
   const image = imageUrl ? `http://localhost:5000${imageUrl}` : defaultImage
+  const rate =
+    comments.reduce((acc, com) => acc + com.rating, 0) / comments.length
 
   return (
-    <Card className='mb-[30px] px-[20px] py-[10px] w-[100%] h-[350px] flex-col'>
+    <Paper
+      elevation={4}
+      className='mb-[30px] w-[100%] h-[450px] mobile:h-[350px] flex-col'
+    >
       <Link to={`/news/post/${_id}`}>
         <img
-          className='mx-auto w-[100%] h-[200px] mb-[10px] object-cover rounded'
+          className='mx-auto w-[100%] h-[300px] mb-[10px] object-cover rounded-t mobile:h-[200px]'
           src={image}
           alt='item-img'
         />
 
-        <Typography variant='h5' className=' mb-[10px]'>
+        <Typography variant='h3' className='text-xl mb-[10px]'>
           {title}
         </Typography>
-        <div className='flex items-center justify-between mb-[10px]'>
+        <div className='flex  mb-[10px] px-[10px]'>
           <Rating
+            className='mr-[10px]'
             name='half-rating'
             readOnly
             size='small'
-            defaultValue={2.5}
-            precision={0.5}
+            defaultValue={rate}
+            precision={1}
           />
-          <Typography variant='subtitle1'>Reviews (3)</Typography>
+          <Typography variant='body2' className='text-[#A2A6B0]'>
+            Comments ({comments.length})
+          </Typography>
         </div>
-
-        <Typography variant='body1' className='text-[18px] '>
-          {text.slice(0, 20)}...
-        </Typography>
       </Link>
-      <Box className='flex justify-between'>
+      <Box className='flex justify-between mb-[10px]'>
         <Box>
           <EyeIcon color='disabled' />
           {viewsCount}
         </Box>
         <LikesComponent post={post} />
       </Box>
-    </Card>
+    </Paper>
   )
 }
 

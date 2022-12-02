@@ -9,12 +9,13 @@ import Register from './layouts/Register'
 import PrivateRoute from './utils/PrivateRoute'
 import CreatePost from './components/CreatePost'
 import { useDispatch } from 'react-redux'
-import { checkAuth } from './redux/slices/userSlice'
+import { checkAuth } from './redux/slices/authSlice'
 import { useEffect } from 'react'
 import Desktops from './layouts/Desktops'
 import FullItem from './layouts/FullItem'
 import News from './layouts/News'
 import FullPost from './layouts/FullPost'
+import InfoUsers from './components/InfoUsers'
 
 function App() {
   const dispatch = useDispatch()
@@ -25,7 +26,7 @@ function App() {
     }
   }, [])
   return (
-    <Container className='mobile:p-0' maxWidth='xl'>
+    <Container className='mobile:p-0 bg-white min-h-screen' maxWidth='lg'>
       <Header />
       <Routes>
         <Route path='/' element={<Home />} />
@@ -39,6 +40,7 @@ function App() {
           <Route path='/admin' element={<AdminDashboard />}>
             <Route path='createProduct' element={<CreateItem />} />
             <Route path='createPost' element={<CreatePost />} />
+            <Route path='users' element={<InfoUsers />} />
           </Route>
         </Route>
       </Routes>

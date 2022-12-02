@@ -1,15 +1,15 @@
-import React, { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Paper from '@mui/material/Paper'
 import LoadingButton from '@mui/lab/LoadingButton'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginUser } from '../redux/slices/userSlice'
+import { loginUser } from '../redux/slices/authSlice'
 import { Link, useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const navigate = useNavigate()
-  const { status } = useSelector((state) => state.user)
+  const { status, username } = useSelector((state) => state.user)
   const [error, setError] = useState('')
   const [info, setInfo] = useState({ username: '', password: '' })
   const dispatch = useDispatch()
@@ -19,6 +19,12 @@ const Login = () => {
       return { ...prev, [e.target.name]: value }
     })
   }
+
+  useEffect(() => {
+    if (username) {
+      navigate('/')
+    }
+  }, [username])
 
   const login = async () => {
     const data = await dispatch(loginUser(info))

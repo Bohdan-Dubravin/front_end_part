@@ -2,11 +2,16 @@ import React from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import ItemInfo from '../components/ItemInfo'
 import CreateIcon from '@mui/icons-material/Create'
+import { Paper } from '@mui/material'
 
 const AdminDashboard = () => {
   return (
     <div className='relative w-[100%]'>
-      <div className='fixed w-[200px]  bg-slate-100  top-[60px] bottom-0'>
+      <Paper
+        variant='outlined'
+        square
+        className='fixed w-[200px] bg-neutral-100  top-[60px] bottom-0'
+      >
         <NavLink
           to='/admin/users'
           className={(navData) => (navData.isActive ? 'active' : 'link')}
@@ -37,7 +42,7 @@ const AdminDashboard = () => {
         >
           Create post
         </NavLink>
-      </div>
+      </Paper>
       <div className='grid ml-[220px] gap-2 '>
         {/* <ItemInfo />
         <ItemInfo />
