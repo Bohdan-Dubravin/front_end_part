@@ -16,6 +16,7 @@ import FullItem from './layouts/FullItem';
 import News from './layouts/News';
 import FullPost from './layouts/FullPost';
 import InfoUsers from './components/InfoUsers';
+import InfoPosts from './components/InfoPosts';
 
 function App() {
   const dispatch = useDispatch();
@@ -40,7 +41,9 @@ function App() {
           <Route path="/admin" element={<AdminDashboard />}>
             <Route path="createProduct" element={<CreateItem />} />
             <Route path="createPost" element={<CreatePost />} />
+            <Route path="createPost/:id" element={<CreatePost />} />
             <Route path="users" element={<InfoUsers />} />
+            <Route path="posts" element={<InfoPosts />} />
           </Route>
         </Route>
       </Routes>
