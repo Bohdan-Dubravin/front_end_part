@@ -6,7 +6,7 @@ import Post from './Post'
 const PostList = ({ posts, isLoading = false }) => {
   const { id } = useSelector((state) => state.user)
 
-  if (isLoading || !id) {
+  if (isLoading) {
     return (
       <div className='gridPosts mx-[auto]'>
         {Array(10)

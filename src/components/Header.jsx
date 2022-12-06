@@ -3,22 +3,18 @@ import { Button, InputAdornment, TextField } from '@mui/material'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import logo from '../assets/images/logo.svg'
 import SearchIcon from '@mui/icons-material/Search'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { logoutUser } from '../redux/slices/authSlice'
 import AppUser from './AppUser'
+import { useEffect, useState } from 'react'
 const Header = () => {
-  const { role, username, auth } = useSelector((state) => state.user)
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const { role, username, auth, status } = useSelector((state) => state.user)
 
-  const logout = async () => {
-    const response = await dispatch(logoutUser())
-    console.log(response)
+  const [isAuth, setIsAuth] = useState(auth)
 
-    if (!auth) {
-      navigate('/')
-    }
-  }
+  useEffect(() => {
+    setIsAuth(auth)
+  }, [status, auth])
 
   return (
     <header className='flex items-center justify-between h-[60px] border-b-2'>
@@ -79,7 +75,7 @@ const Header = () => {
             </Button>
           </Link>
         )}
-        {!auth && (
+        {!isAuth && (
           <Link to='/register'>
             <Button
               className='ml-[16px] font-semibold'
@@ -90,7 +86,7 @@ const Header = () => {
             </Button>
           </Link>
         )}
-        {!auth ? (
+        {!isAuth ? (
           <Link to='/login'>
             <Button className='ml-[16px] font-bold bg-sky-500 text-white hover:bg-sky-600'>
               Login

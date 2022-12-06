@@ -1,4 +1,4 @@
-import { Card, Paper, Rating, Typography } from '@mui/material'
+import { Avatar, Card, Paper, Rating, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 import defaultImage from '../assets/images/default-image.jpg'
 import EyeIcon from '@mui/icons-material/RemoveRedEyeOutlined'
@@ -6,7 +6,7 @@ import { Box } from '@mui/system'
 import LikesComponent from './LikesComponent'
 
 const Post = ({ post }) => {
-  const { title, text, imageUrl, _id, viewsCount, comments } = post
+  const { title, imageUrl, _id, viewsCount, comments } = post
 
   const image = imageUrl ? `http://localhost:5000${imageUrl}` : defaultImage
   const rate =
@@ -27,7 +27,7 @@ const Post = ({ post }) => {
         <Typography variant='h3' className='text-xl mb-[10px]'>
           {title}
         </Typography>
-        <div className='flex  mb-[10px] px-[10px]'>
+        <Box className='flex  mb-[10px] px-[10px]'>
           <Rating
             className='mr-[10px]'
             name='half-rating'
@@ -39,14 +39,23 @@ const Post = ({ post }) => {
           <Typography variant='body2' className='text-[#A2A6B0]'>
             Comments ({comments.length})
           </Typography>
-        </div>
+        </Box>
       </Link>
-      <Box className='flex justify-between mb-[10px]'>
+      <Box className='flex justify-between mb-[10px] px-[10px]'>
+        <Box className='flex'>
+          <Avatar
+            alt={post.user.username}
+            src={`http://localhost:5000${post.user.avatarUrl}`}
+          />
+          <Typography variant='body2' className='font-bold self-end'>
+            {post.user.username}
+          </Typography>
+        </Box>
         <Box>
           <EyeIcon color='disabled' />
           {viewsCount}
+          <LikesComponent post={post} />
         </Box>
-        <LikesComponent post={post} />
       </Box>
     </Paper>
   )

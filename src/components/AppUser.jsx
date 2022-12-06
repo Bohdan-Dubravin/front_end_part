@@ -8,21 +8,34 @@ import {
   Typography,
 } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { logoutUser } from '../redux/slices/authSlice'
 
 const AppUser = () => {
   const [showNav, setShowNav] = useState(null)
-  const { role, username, auth, avatarUrl } = useSelector((state) => state.user)
+  const { role, username, auth, avatarUrl, status } = useSelector(
+    (state) => state.user
+  )
+
+  const [isAuth, setIsAuth] = useState(auth)
+
+  useEffect(() => {
+    setIsAuth(auth)
+  }, [status])
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const logout = () => {
+    setIsAuth(false)
     setShowNav(false)
     dispatch(logoutUser())
     navigate('/')
+  }
+
+  if (!isAuth) {
+    return
   }
 
   return (
@@ -30,10 +43,7 @@ const AppUser = () => {
       <Box onClick={(e) => setShowNav(e.currentTarget)}>
         <Tooltip sx={{ p: 0 }} title='Open settings'>
           <IconButton>
-            <Avatar
-              alt={username || 'U'}
-              src={`http://localhost:5000${avatarUrl}`}
-            />
+            <Avatar alt={username} src={`http://localhost:5000${avatarUrl}`} />
           </IconButton>
         </Tooltip>
         <ExpandMoreIcon />
