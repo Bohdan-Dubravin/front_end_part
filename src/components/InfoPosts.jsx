@@ -70,7 +70,7 @@ const InfoPosts = () => {
           <TableHead className='bg-[#1976d2] '>
             <TableRow>
               <TableCell className='font-bold text-white'>Id</TableCell>
-              <TableCell className='font-bold text-white' align='right'>
+              <TableCell className='font-bold text-white ' align='right'>
                 Title
               </TableCell>
               <TableCell className='font-bold text-white' align='right'>
@@ -98,7 +98,9 @@ const InfoPosts = () => {
                   return (
                     <TableRow key={_id}>
                       <TableCell>{_id}</TableCell>
-                      <TableCell align='right'>{title}</TableCell>
+                      <TableCell align='right truncate'>
+                        {title.length > 15 ? `${title.slice(0, 15)}...` : title}
+                      </TableCell>
                       <TableCell align='right'>
                         <img
                           className='h-[40px] w-[40px]'
@@ -107,7 +109,7 @@ const InfoPosts = () => {
                         />
                       </TableCell>
                       <TableCell className='flex ' align='right'>
-                        <p className='ml-[5px] leading-[40px]'>
+                        <p className='ml-[5px] leading-[40px] truncate'>
                           {postAuthor.username}
                         </p>
                         <Avatar

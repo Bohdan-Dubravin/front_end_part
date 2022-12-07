@@ -14,12 +14,13 @@ const CreatePost = () => {
   const [initial, setInitial] = useState({
     title: '',
     text: '',
+    tags: '',
   })
 
   const uploadPost = async (id) => {
     const response = await api.get(`/posts/${id}`)
-    const { text, title, imageUrl } = response.data
-    setInitial({ text, title })
+    const { text, title, imageUrl, tags } = response.data
+    setInitial({ text, title, tags: tags.join('') })
     setItemImage(imageUrl)
   }
 
@@ -46,16 +47,22 @@ const CreatePost = () => {
   }
 
   const createPost = async (values) => {
+    const tags =
+      values.tags.split(/(?=#)/g).filter((tag) => tag.length >= 2) || []
     const newPost = await api.post('/posts/create', {
       ...values,
+      tags: [...new Set(tags)],
       imageUrl: itemImage,
     })
     return newPost
   }
 
   const updatePost = async (values) => {
+    const tags =
+      values.tags.split(/(?=#)/g).filter((tag) => tag.length > 2) || []
     const newPost = await api.patch(`/posts/update/${id}`, {
       ...values,
+      tags: [...new Set(tags)],
       imageUrl: itemImage,
     })
     return newPost
@@ -106,6 +113,18 @@ const CreatePost = () => {
                   value={values.title}
                   error={Boolean(errors.title)}
                   helperText={errors.title}
+                  onBlur={handleBlur}
+                />
+                <TextField
+                  className='w-[500px] my-[20px]'
+                  size='small'
+                  id='tags'
+                  label='tags'
+                  name='tags'
+                  onChange={handleChange}
+                  value={values.tags}
+                  error={Boolean(errors.tags)}
+                  helperText={errors.tags}
                   onBlur={handleBlur}
                 />
                 <TextField

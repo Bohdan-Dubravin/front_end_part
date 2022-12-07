@@ -38,7 +38,7 @@ const postValidation = Yup.object().shape({
   title: Yup.string()
     .min(2, 'Title should have more than 2 characters')
     .required('Enter title')
-    .max(30, 'Title should have less than 30 characters'),
+    .max(80, 'Title should have less than 80 characters'),
   text: Yup.string()
     .min(10, 'Description should have more than 10 characters')
     .required('Enter description')

@@ -19,7 +19,7 @@ const PostList = ({ posts, isLoading = false }) => {
   }
 
   return (
-    <div className='gridPosts mx-[auto]'>
+    <div className='max-w-[750px] mr-[auto]'>
       {posts.map((item) => {
         return <Post key={item._id} post={item} />
       })}

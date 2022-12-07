@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import PostList from '../components/PostList'
+import Tags from '../components/Tags'
 import { getAllPosts } from '../redux/slices/postSlice'
 
 const News = () => {
@@ -12,8 +13,9 @@ const News = () => {
   }, [dispatch])
 
   return (
-    <div className='mt-[30px]'>
-      {<PostList isLoading={status} posts={posts} />}
+    <div className='relative w-[100%] mt-[30px] flex'>
+      <PostList isLoading={status} posts={posts} />
+      <Tags />
     </div>
   )
 }
