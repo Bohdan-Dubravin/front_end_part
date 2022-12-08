@@ -48,7 +48,10 @@ const CreatePost = () => {
 
   const createPost = async (values) => {
     const tags =
-      values.tags.split(/(?=#)/g).filter((tag) => tag.length >= 2) || []
+      values.tags
+        .replace(/ /g, '')
+        .split(/(?=#)/g)
+        .filter((tag) => tag.length >= 2) || []
     const newPost = await api.post('/posts/create', {
       ...values,
       tags: [...new Set(tags)],
@@ -59,7 +62,10 @@ const CreatePost = () => {
 
   const updatePost = async (values) => {
     const tags =
-      values.tags.split(/(?=#)/g).filter((tag) => tag.length > 2) || []
+      values.tags
+        .replace(/ /g, '')
+        .split(/(?=#)/g)
+        .filter((tag) => tag.length > 2) || []
     const newPost = await api.patch(`/posts/update/${id}`, {
       ...values,
       tags: [...new Set(tags)],
