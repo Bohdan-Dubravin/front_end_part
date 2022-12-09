@@ -42,7 +42,7 @@ const postValidation = Yup.object().shape({
   text: Yup.string()
     .min(10, 'Description should have more than 10 characters')
     .required('Enter description')
-    .max(250, 'Description should have less than 250 characters'),
+    .max(20000, 'Description should have less than 20000 characters'),
 })
 
 const commentValidation = Yup.object().shape({

@@ -22,12 +22,12 @@ const Post = ({ post }) => {
   return (
     <Paper
       elevation={4}
-      className='mb-[30px] w-[100%] h-[460px] mobile:h-[330px] flex-col relative'
+      className='mb-[30px] w-[100%] h-[430px] mobile:h-[330px] flex-col relative'
     >
       <Tooltip sx={{ p: 2 }} title='show full post' followCursor={true}>
         <Link to={`/news/post/${_id}`}>
           <img
-            className='mx-auto w-[100%] h-[330px] mb-[5px] object-cover rounded-t mobile:h-[200px]'
+            className='mx-auto w-[100%] h-[310px] mb-[5px] object-cover rounded-t mobile:h-[200px]'
             src={image}
             alt='item-img'
           />

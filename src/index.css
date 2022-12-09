@@ -77,4 +77,13 @@ body {
   .animate {
     animation: 1s ease-out 0s 1 slideInFromLeft;
   }
+
+  .ql-editor {
+    min-height: 300px;
+  }
+
+  .ql-toolbar .ql-bubble .ql-editor .ql-snow {
+    border: 1px solid #ccc;
+    border-radius: 20px;
+  }
 }

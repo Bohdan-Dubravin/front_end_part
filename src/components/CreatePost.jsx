@@ -1,14 +1,16 @@
 import { LoadingButton } from '@mui/lab'
 import { Button, Paper, TextField, Typography } from '@mui/material'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Formik } from 'formik'
 import api from '../api/config'
 import { postValidation } from '../utils/validtion'
 import { useNavigate, useParams } from 'react-router-dom'
+import Editor from './Editor'
 
 const CreatePost = () => {
   const { id } = useParams()
   const [itemImage, setItemImage] = useState('')
+  const [showText, setShowText] = useState(true)
   const navigate = useNavigate()
 
   const [initial, setInitial] = useState({
@@ -18,10 +20,12 @@ const CreatePost = () => {
   })
 
   const uploadPost = async (id) => {
+    setShowText(false)
     const response = await api.get(`/posts/${id}`)
     const { text, title, imageUrl, tags } = response.data
     setInitial({ text, title, tags: tags.join('') })
     setItemImage(imageUrl)
+    setShowText(true)
   }
 
   useEffect(() => {
@@ -105,6 +109,7 @@ const CreatePost = () => {
             handleBlur,
             handleSubmit,
             isSubmitting,
+            setFieldValue,
             /* and other goodies */
           }) => (
             <form onSubmit={handleSubmit} className='createUserForm__form'>
@@ -133,20 +138,12 @@ const CreatePost = () => {
                   helperText={errors.tags}
                   onBlur={handleBlur}
                 />
-                <TextField
-                  multiline
-                  rows={8}
-                  className='w-[100%] my-[20px]'
-                  size='small'
-                  id='text'
-                  label='text'
-                  name='text'
-                  onChange={handleChange}
-                  value={values.text}
-                  error={Boolean(errors.text)}
-                  helperText={errors.text}
-                  onBlur={handleBlur}
-                />
+              </div>
+              <div className='rounded'>
+                {Boolean(errors.text) && errors.text}
+                {showText && (
+                  <Editor setValue={setFieldValue} defaultText={initial.text} />
+                )}
               </div>
               <Button variant='contained' component='label'>
                 Upload image

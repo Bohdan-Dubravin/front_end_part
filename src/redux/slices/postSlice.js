@@ -4,9 +4,10 @@ import api from '../../api/config'
 
 export const getAllPosts = createAsyncThunk(
   '/getItems',
-  async (_, { rejectWithValue }) => {
+  async (tag, { rejectWithValue }) => {
     try {
-      const response = await api.get('/posts')
+      console.log(tag)
+      const response = await api.get('/posts', { params: { tag } })
       return response.data
     } catch (error) {
       return rejectWithValue(error.response)

@@ -1,7 +1,7 @@
 import { Avatar, Paper, Rating, Skeleton, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 
-const PostSkeleton = () => {
+const FullPostSkeleton = () => {
   return (
     <Paper
       elevation={4}
@@ -38,4 +38,4 @@ const PostSkeleton = () => {
   )
 }
 
-export default PostSkeleton
+export default FullPostSkeleton
