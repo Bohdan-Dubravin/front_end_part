@@ -1,4 +1,4 @@
-import * as Yup from 'yup'
+import * as Yup from 'yup';
 
 // const validPhone = /^(?:\+38)?(0\d{9})$/
 
@@ -33,7 +33,7 @@ const itemValidation = Yup.object().shape({
   // powerSuplay: Yup.string().optional(),
   // storage: Yup.string().optional(),
   // inStock: Yup.boolean().optional(),
-})
+});
 const postValidation = Yup.object().shape({
   title: Yup.string()
     .min(2, 'Title should have more than 2 characters')
@@ -43,7 +43,7 @@ const postValidation = Yup.object().shape({
     .min(10, 'Description should have more than 10 characters')
     .required('Enter description')
     .max(20000, 'Description should have less than 20000 characters'),
-})
+});
 
 const commentValidation = Yup.object().shape({
   text: Yup.string()
@@ -51,7 +51,7 @@ const commentValidation = Yup.object().shape({
     .required('Enter text')
     .max(250, 'Text should have less than 250 characters'),
   rating: Yup.number().min(1).required('Rate post').max(5),
-})
+});
 
 const registerValidation = Yup.object().shape({
   username: Yup.string()
@@ -63,6 +63,23 @@ const registerValidation = Yup.object().shape({
     .required('Enter Password')
     .max(25, 'Password should have less than 25 characters'),
   email: Yup.string().email('Enter valid email').required('Enter Password'),
-})
+});
 
-export { itemValidation, postValidation, commentValidation, registerValidation }
+const loginValidation = Yup.object().shape({
+  username: Yup.string()
+    .min(2, 'User name should have more than 2 characters')
+    .required('Enter User name')
+    .max(25, 'User name should have less than 25 characters'),
+  password: Yup.string()
+    .min(5, 'Password should have more than 5 characters')
+    .required('Enter Password')
+    .max(25, 'Password should have less than 25 characters'),
+});
+
+export {
+  itemValidation,
+  postValidation,
+  commentValidation,
+  registerValidation,
+  loginValidation,
+};

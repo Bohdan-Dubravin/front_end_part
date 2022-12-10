@@ -30,11 +30,11 @@ function App() {
     <Container className="mobile:p-0 bg-white min-h-screen" maxWidth="lg">
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<News />} />
+        {/* <Route path="/" element={<Home />} /> */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/desktops" element={<Desktops />} />
-        <Route path="/news" element={<News />} />
         <Route path="/news/post/:id" element={<FullPost />} />
         <Route path="/desktops/:id" element={<FullItem />} />
         <Route element={<PrivateRoute />}>

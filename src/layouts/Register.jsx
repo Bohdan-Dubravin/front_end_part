@@ -64,8 +64,6 @@ const Register = () => {
         </Typography>
       )}
       <Formik
-        validateOnChange={true}
-        validateOnBlur={true}
         initialValues={{
           username: '',
           password: '',
@@ -83,7 +81,6 @@ const Register = () => {
           handleChange,
           handleSubmit,
           isSubmitting,
-          handleBlur,
         }) => (
           <form onSubmit={handleSubmit}>
             <TextField
@@ -116,8 +113,8 @@ const Register = () => {
               name="password"
               onChange={handleChange}
               value={values.password}
-              error={Boolean(errors.password)}
-              helperText={errors.password}
+              error={touched.password && Boolean(errors.password)}
+              helperText={touched.password && errors.password}
             />
             <div className="h-[100px] mt-[10px]">
               {!itemImage ? (
