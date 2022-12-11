@@ -17,6 +17,7 @@ import News from './layouts/News';
 import FullPost from './layouts/FullPost';
 import InfoUsers from './components/InfoUsers';
 import InfoPosts from './components/InfoPosts';
+import Footer from './components/Footer';
 
 function App() {
   const dispatch = useDispatch();
@@ -27,7 +28,10 @@ function App() {
     }
   }, []);
   return (
-    <Container className="mobile:p-0 bg-white min-h-screen" maxWidth="lg">
+    <Container
+      className="p-0 pb-[60px] relative  bg-white min-h-screen"
+      maxWidth="lg"
+    >
       <Header />
       <Routes>
         <Route path="/" element={<News />} />
@@ -47,6 +51,7 @@ function App() {
           </Route>
         </Route>
       </Routes>
+      <Footer />
     </Container>
   );
 }

@@ -6,11 +6,11 @@ import { Box } from '@mui/material';
 
 const AdminDashboard = () => {
   return (
-    <div className="relative flex w-[100%] ">
+    <div className="relative flex w-[100%] px-[20px] ">
       <Box
         variant="outlined"
         square
-        className="sticky w-[200px]  top-[60px] sticky_full bg-[#1976d2F0] px-2"
+        className="sticky w-[200px] top-[60px] left-[20px] sticky_full bg-[#3878b4eb] px-2"
       >
         <NavLink
           to="/admin/users"

@@ -62,7 +62,7 @@ const Header = () => {
         /> */}
 
         {(role === 'admin' || role === 'manager') && (
-          <Link to="/admin">
+          <Link to="/admin/posts">
             <Button
               size="small"
               className="ml-[16px] font-semibold text-[#fff] bg-[#d32f2f] mr-[10px]"

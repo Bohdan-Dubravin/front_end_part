@@ -37,7 +37,7 @@ const Register = () => {
       formData.append('image', e.target.files[0]);
 
       const response = await axios.post(
-        'http://localhost:5000/upload',
+        `${process.env.REACT_APP_BASE_URL}/upload`,
         formData
       );
 
@@ -132,7 +132,7 @@ const Register = () => {
                 <>
                   <Avatar
                     alt="avatar"
-                    src={`http://localhost:5000${itemImage}`}
+                    src={`${process.env.REACT_APP_BASE_URL}${itemImage}`}
                   />
                   <Button color="error" onClick={() => removeImage()}>
                     Delete image

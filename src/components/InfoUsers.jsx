@@ -96,7 +96,7 @@ const InfoUsers = () => {
                       <TableCell align="right">
                         <Avatar
                           alt={user.username}
-                          src={`http://localhost:5000${user.avatarUrl}`}
+                          src={`${process.env.REACT_APP_BASE_URL}${user.avatarUrl}`}
                         />
                       </TableCell>
                       <TableCell align="right">{user.role}</TableCell>

@@ -20,7 +20,7 @@ const Item = ({ item }) => {
   } = item
 
   const imageUrl = images.length
-    ? `http://localhost:5000${images[0]}`
+    ? `${process.env.REACT_APP_BASE_URL}${images[0]}`
     : defaultImage
 
   return (

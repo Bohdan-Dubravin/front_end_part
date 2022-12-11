@@ -160,7 +160,7 @@ const CreatePost = () => {
                   <Button color="error" onClick={() => removeImage()}>
                     Delete image
                   </Button>
-                  <img src={`http://localhost:5000${itemImage}`} alt="Upload" />
+                  <img src={`${process.env.REACT_APP_BASE_URL}${itemImage}`} alt="Upload" />
                 </>
               )}
               <LoadingButton

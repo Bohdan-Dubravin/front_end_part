@@ -53,7 +53,7 @@ export const checkAuth = createAsyncThunk(
   '/checkAuth',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`http://localhost:5000/auth/refresh`, {
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/auth/refresh`, {
         withCredentials: true,
       })
       localStorage.setItem('token', response.data.accessToken)
