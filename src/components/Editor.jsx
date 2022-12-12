@@ -3,7 +3,6 @@ import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 
 const Editor = ({ setValue, defaultText = '' }) => {
-  // const [value, setValue] = useState('')
   const [defValue, setDefValue] = useState('')
 
   const modules = {

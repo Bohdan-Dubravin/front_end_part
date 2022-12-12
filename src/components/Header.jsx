@@ -1,25 +1,19 @@
-import { Button, InputAdornment, TextField } from '@mui/material';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
-import logo from '../assets/images/logo.svg';
-import SearchIcon from '@mui/icons-material/Search';
-import { useSelector } from 'react-redux';
-import AppUser from './AppUser';
-import { useEffect, useState } from 'react';
+import { Button, InputAdornment, TextField } from '@mui/material'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
+import logo from '../assets/images/logo.svg'
+import SearchIcon from '@mui/icons-material/Search'
+import { useSelector } from 'react-redux'
+import AppUser from './AppUser'
+import { useEffect, useState } from 'react'
 const Header = () => {
-  const { role, username, auth, status } = useSelector((state) => state.user);
-
-  const [isAuth, setIsAuth] = useState(auth);
-
-  useEffect(() => {
-    setIsAuth(auth);
-  }, [status, auth]);
+  const { role, username, auth, status } = useSelector((state) => state.user)
 
   return (
-    <header className="flex items-center justify-between  h-[60px] border-b-2">
-      <Link className="block p-[15px] mr-[20px]" to="/">
-        <img src={logo} alt="logo" />
+    <header className='flex items-center justify-between  h-[60px] border-b-2'>
+      <Link className='block p-[15px] mr-[20px]' to='/'>
+        <img src={logo} alt='logo' />
       </Link>
-      <nav className="flex  items-center w-[150px] justify-between mr-[auto]">
+      <nav className='flex  items-center w-[150px] justify-between mr-[auto]'>
         {/* <NavLink
           className={(navData) => (navData.isActive ? 'active' : 'link')}
           to='/desktops'
@@ -28,7 +22,7 @@ const Header = () => {
         </NavLink> */}
         <NavLink
           className={(navData) => (navData.isActive ? 'active' : 'link')}
-          to="/"
+          to='/'
         >
           News
         </NavLink>
@@ -40,13 +34,13 @@ const Header = () => {
         </NavLink> */}
         <NavLink
           className={(navData) => (navData.isActive ? 'active' : 'link')}
-          to="/aboutus"
+          to='/aboutus'
         >
           About us
         </NavLink>
       </nav>
 
-      <div className="flex items-center relative">
+      <div className='flex items-center relative'>
         {/* <TextField
           className={`rounded-2xl w-[200px] font-semibold transition-all `}
           id="filled-basic"
@@ -62,31 +56,31 @@ const Header = () => {
         /> */}
 
         {(role === 'admin' || role === 'manager') && (
-          <Link to="/admin/posts">
+          <Link to='/admin/posts'>
             <Button
-              size="small"
-              className="ml-[16px] font-semibold text-[#fff] bg-[#d32f2f] mr-[10px]"
-              variant="contained"
-              color="error"
+              size='small'
+              className='ml-[16px] font-semibold text-[#fff] bg-[#d32f2f] mr-[10px]'
+              variant='contained'
+              color='error'
             >
               Admin Panel
             </Button>
           </Link>
         )}
-        {!isAuth && (
-          <Link to="/register">
+        {!auth && (
+          <Link to='/register'>
             <Button
-              className="ml-[16px] font-semibold"
-              variant="outlined"
-              color="secondary"
+              className='ml-[16px] font-semibold'
+              variant='outlined'
+              color='secondary'
             >
               Register
             </Button>
           </Link>
         )}
-        {!isAuth ? (
-          <Link to="/login">
-            <Button className="ml-[16px] font-bold bg-sky-500 text-white hover:bg-sky-600">
+        {!auth ? (
+          <Link to='/login'>
+            <Button className='ml-[16px] font-bold bg-sky-500 text-white hover:bg-sky-600'>
               Login
             </Button>
           </Link>
@@ -95,7 +89,7 @@ const Header = () => {
         )}
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header
