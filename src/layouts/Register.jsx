@@ -38,10 +38,15 @@ const Register = () => {
     try {
       const formData = new FormData()
       formData.append('image', e.target.files[0])
-
+      console.log(formData)
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/upload`,
-        formData
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
       )
 
       setItemImage(response.data.url)
