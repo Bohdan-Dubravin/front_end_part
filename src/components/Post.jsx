@@ -9,9 +9,7 @@ import Tags from './Tags'
 const Post = ({ post }) => {
   const { title, imageUrl, _id, viewsCount, comments, createdAt, tags } = post
 
-  const image = imageUrl
-    ? `${process.env.REACT_APP_BASE_URL}${imageUrl}`
-    : defaultImage
+  const image = imageUrl ? `${imageUrl}` : defaultImage
   const rate =
     comments.reduce((acc, com) => acc + com.rating, 0) / comments.length
   const date = new Date(createdAt.toString())
@@ -72,7 +70,7 @@ const Post = ({ post }) => {
                   <Typography
                     key={tag}
                     variant='body2'
-                    className='text-[#A2A6B0] hover:text-black cursor-pointer'
+                    className='text-[#A2A6B0]'
                   >
                     {tag}
                   </Typography>
@@ -90,7 +88,7 @@ const Post = ({ post }) => {
         <Avatar
           size='sm'
           alt={post.user.username}
-          src={`${process.env.REACT_APP_BASE_URL}${post.user.avatarUrl}`}
+          src={`${post.user.avatarUrl}`}
         />
         <Typography variant='body2' className='font-bold self-end truncate'>
           {post.user.username}

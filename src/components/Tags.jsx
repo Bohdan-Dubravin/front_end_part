@@ -9,7 +9,7 @@ const Tags = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const dispatch = useDispatch()
   const { status, tags } = useSelector((state) => state.tags)
-  console.log(tags)
+
   return (
     <>
       {tags.map((tag) => {

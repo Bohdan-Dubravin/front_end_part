@@ -19,9 +19,7 @@ const Item = ({ item }) => {
     _id,
   } = item
 
-  const imageUrl = images.length
-    ? `${process.env.REACT_APP_BASE_URL}${images[0]}`
-    : defaultImage
+  const imageUrl = images.length ? `${images[0]}` : defaultImage
 
   return (
     <Card className='px-[20px] py-[10px] w-[240px] h-[350px] flex-col'>

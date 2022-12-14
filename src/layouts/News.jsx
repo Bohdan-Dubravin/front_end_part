@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 import PostList from '../components/PostList'
 import SideTagBar from '../components/SideTagBar'
-
 import { getAllPosts } from '../redux/slices/postSlice'
 
 const News = () => {

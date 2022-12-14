@@ -53,9 +53,12 @@ export const checkAuth = createAsyncThunk(
   '/checkAuth',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/auth/refresh`, {
-        withCredentials: true,
-      })
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/auth/refresh`,
+        {
+          withCredentials: true,
+        }
+      )
       localStorage.setItem('token', response.data.accessToken)
       return response.data
     } catch (error) {
@@ -130,7 +133,6 @@ export const userSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         const { username, role, avatarUrl, _id } = action.payload.data.user
-        console.log(action.payload)
         state.status = ''
         state.username = username
         state.role = role
@@ -142,11 +144,11 @@ export const userSlice = createSlice({
         state.status = 'load'
       })
       .addCase(checkAuth.rejected, (state, action) => {
+        console.log('not auth')
         state.status = 'error'
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
         const { username, role, avatarUrl, _id } = action.payload
-
         state.status = ''
         state.username = username
         state.role = role

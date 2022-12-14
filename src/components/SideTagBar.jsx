@@ -17,7 +17,7 @@ const SideTagBar = () => {
       {!status && tags.length ? (
         <Paper
           elevation={4}
-          className='h-[400px] sticky w-[200px] top-[10px] right-0 ml-[10px] p-[10px] bg-gray-100'
+          className='mobile:hidden h-[400px] sticky w-[200px] top-[10px] right-0 ml-[10px] p-[10px] bg-gray-100'
         >
           <Typography variant='h3' className='font-fold text-xl text-center'>
             Popular tags

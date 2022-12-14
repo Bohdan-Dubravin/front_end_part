@@ -59,7 +59,7 @@ const Header = () => {
           <Link to='/admin/posts'>
             <Button
               size='small'
-              className='ml-[16px] font-semibold text-[#fff] bg-[#d32f2f] mr-[10px]'
+              className='mx-[20px] font-semibold text-[#fff] bg-[#d32f2f] mr-[10px]'
               variant='contained'
               color='error'
             >
@@ -80,7 +80,7 @@ const Header = () => {
         )}
         {!auth ? (
           <Link to='/login'>
-            <Button className='ml-[16px] font-bold bg-sky-500 text-white hover:bg-sky-600'>
+            <Button className='mx-[20px] font-bold bg-sky-500 text-white hover:bg-sky-600'>
               Login
             </Button>
           </Link>

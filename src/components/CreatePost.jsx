@@ -6,6 +6,7 @@ import api from '../api/config'
 import { postValidation } from '../utils/validtion'
 import { useNavigate, useParams } from 'react-router-dom'
 import Editor from './Editor'
+import { YoutubeSearchedFor } from '@mui/icons-material'
 
 const CreatePost = () => {
   const { id } = useParams()
@@ -22,7 +23,7 @@ const CreatePost = () => {
   const uploadPost = async (id) => {
     setShowText(false)
     const response = await api.get(`/posts/${id}`)
-    console.log(response.data)
+
     const { text, title, imageUrl, tags } = response.data
     setInitial({ text, title, tags: tags.join('') })
     setItemImage(imageUrl)
@@ -43,7 +44,7 @@ const CreatePost = () => {
 
       const response = await api.post('/upload', formData)
 
-      setItemImage(response.data.url)
+      setItemImage(response.data)
     } catch (error) {
       console.log(error)
     }
@@ -124,8 +125,8 @@ const CreatePost = () => {
                   name='title'
                   onChange={handleChange}
                   value={values.title}
-                  error={Boolean(errors.title)}
-                  helperText={errors.title}
+                  error={YoutubeSearchedFor.title && Boolean(errors.title)}
+                  helperText={touched.title && errors.title}
                 />
                 <TextField
                   className='w-[500px] my-[20px]'
@@ -160,10 +161,7 @@ const CreatePost = () => {
                   <Button color='error' onClick={() => removeImage()}>
                     Delete image
                   </Button>
-                  <img
-                    src={`${process.env.REACT_APP_BASE_URL}${itemImage}`}
-                    alt='Upload'
-                  />
+                  <img src={`${itemImage}`} alt='Upload' />
                 </>
               )}
               <LoadingButton

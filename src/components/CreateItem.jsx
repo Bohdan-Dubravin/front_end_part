@@ -1,4 +1,4 @@
-import { LoadingButton } from '@mui/lab';
+import { LoadingButton } from '@mui/lab'
 import {
   Button,
   Checkbox,
@@ -6,50 +6,42 @@ import {
   Paper,
   TextField,
   Typography,
-} from '@mui/material';
-import { useState } from 'react';
-import { Formik } from 'formik';
-import api from '../api/config';
-import { itemValidation } from '../utils/validtion';
+} from '@mui/material'
+import { useState } from 'react'
+import { Formik } from 'formik'
+import api from '../api/config'
+import { itemValidation } from '../utils/validtion'
 
-const fields = [
-  'title',
-  'price',
-  'CPU',
-  'GPU',
-  'RAM',
-  'powerSuplay',
-  'storage',
-];
+const fields = ['title', 'price', 'CPU', 'GPU', 'RAM', 'powerSuplay', 'storage']
 
 const CreateItem = () => {
-  const [itemImage, setItemImage] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [avaliable, setAvaliavle] = useState(true);
+  const [itemImage, setItemImage] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [avaliable, setAvaliavle] = useState(true)
   const createItem = () => {
-    setLoading(true);
-  };
+    setLoading(true)
+  }
 
   const inputChangefile = async (e) => {
     try {
-      const formData = new FormData();
-      formData.append('image', e.target.files[0]);
+      const formData = new FormData()
+      formData.append('image', e.target.files[0])
 
-      const response = await api.post('/upload', formData);
+      const response = await api.post('/upload', formData)
 
-      setItemImage(response.data.url);
+      setItemImage(response.data.url)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
   const removeImage = () => {
-    setItemImage('');
-  };
+    setItemImage('')
+  }
 
   return (
     <div>
-      <Paper className="flex-col p-[20px] mt-[30px]">
-        <Typography variant="h4">Create new product</Typography>
+      <Paper className='flex-col p-[20px] mt-[30px]'>
+        <Typography variant='h4'>Create new product</Typography>
         <Formik
           initialValues={{
             title: '',
@@ -67,8 +59,8 @@ const CreateItem = () => {
               ...values,
               inStock: avaliable,
               images: [itemImage],
-            });
-            console.log(newItem);
+            })
+            console.log(newItem)
           }}
         >
           {({
@@ -81,80 +73,77 @@ const CreateItem = () => {
             isSubmitting,
             /* and other goodies */
           }) => (
-            <form onSubmit={handleSubmit} className="createUserForm__form">
-              <div className="flex flex-col">
+            <form onSubmit={handleSubmit} className='createUserForm__form'>
+              <div className='flex flex-col'>
                 {fields.map((val) => {
                   return (
                     <TextField
                       key={val}
-                      className=" my-[5px] w-[320px]"
-                      size="small"
+                      className=' my-[5px] w-[320px]'
+                      size='small'
                       id={val}
                       label={val}
-                      variant="standard"
+                      variant='standard'
                       name={val}
                       onChange={handleChange}
                       value={values[val]}
                       error={Boolean(errors[val])}
                       helperText={errors[val]}
                     />
-                  );
+                  )
                 })}
                 <TextField
                   multiline
                   rows={8}
-                  className="w-[100%] my-[20px]"
-                  size="small"
-                  id="descripton"
-                  label="descripton"
-                  name="description"
+                  className='w-[100%] my-[20px]'
+                  size='small'
+                  id='descripton'
+                  label='descripton'
+                  name='description'
                   onChange={handleChange}
                   value={values.description}
                   error={Boolean(errors.description)}
                   helperText={errors.description}
                 />
               </div>
-              <div className="flex ">
+              <div className='flex '>
                 <FormControlLabel
-                  label="In stock"
-                  id="inStock"
+                  label='In stock'
+                  id='inStock'
                   control={
                     <Checkbox
-                      label="inStock"
+                      label='inStock'
                       onChange={() => setAvaliavle(!avaliable)}
-                      name="inStock"
+                      name='inStock'
                       defaultChecked
                     />
                   }
                 />
               </div>
-              <Button variant="contained" component="label">
+              <Button variant='contained' component='label'>
                 Upload image
                 <input
                   onChange={(e) => inputChangefile(e)}
-                  name="image"
-                  id="image"
+                  name='image'
+                  id='image'
                   hidden
-                  type="file"
+                  type='file'
                 />
               </Button>
               {itemImage && (
                 <>
-                  <Button color="error" onClick={() => removeImage()}>
+                  <Button color='error' onClick={() => removeImage()}>
                     Delete image
                   </Button>
-                  <img
-                    src={`${process.env.REACT_APP_BASE_URL}${itemImage}`}
-                    alt="Upload"
-                  />
+                  <img src={`${itemImage}`} alt='Upload' />
                 </>
               )}
               <LoadingButton
-                size="large"
-                className="block mt-[20px]"
-                color="error"
-                variant="outlined"
-                type="submit"
+                size='large'
+                className='block mt-[20px]'
+                color='error'
+                variant='outlined'
+                type='submit'
                 loading={isSubmitting}
               >
                 Publish
@@ -164,7 +153,7 @@ const CreateItem = () => {
         </Formik>
       </Paper>
     </div>
-  );
-};
+  )
+}
 
-export default CreateItem;
+export default CreateItem
