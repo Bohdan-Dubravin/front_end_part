@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import ItemInfo from '../components/ItemInfo';
-import CreateIcon from '@mui/icons-material/Create';
+
 import { Box } from '@mui/material';
 
 const AdminDashboard = () => {

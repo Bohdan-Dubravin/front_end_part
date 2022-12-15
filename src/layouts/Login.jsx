@@ -61,14 +61,7 @@ const Login = () => {
           login(values)
         }}
       >
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleSubmit,
-          isSubmitting,
-        }) => (
+        {({ values, errors, touched, handleChange, handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <TextField
               className='mb-[10px]'
@@ -86,6 +79,7 @@ const Login = () => {
               label='Password'
               className='mb-[10px]'
               fullWidth
+              type='password'
               name='password'
               onChange={handleChange}
               value={values.password}
@@ -118,7 +112,7 @@ const Login = () => {
             To login with admin rights
           </Typography>
           <Typography className='text-start text-[#1976d2]' variant='body2'>
-            User name: user2
+            User name: admin
           </Typography>
           <Typography className='text-start text-[#1976d2] ' variant='body2'>
             password: 12345
