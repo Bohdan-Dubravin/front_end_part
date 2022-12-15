@@ -1,21 +1,41 @@
 import { LoadingButton } from '@mui/lab'
-import {
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Paper,
-  TextField,
-  Typography,
-} from '@mui/material'
-import { useState } from 'react'
+import { Button, Paper, TextField, Typography } from '@mui/material'
+import { useState, useEffect, useMemo } from 'react'
 import { Formik } from 'formik'
 import api from '../api/config'
 import { postValidation } from '../utils/validtion'
-
-const fields = ['title', 'price', 'CPU', 'GPU', 'RAM', 'powerSuplay', 'storage']
+import { useNavigate, useParams } from 'react-router-dom'
+import Editor from './Editor'
+import { YoutubeSearchedFor } from '@mui/icons-material'
 
 const CreatePost = () => {
+  const { id } = useParams()
   const [itemImage, setItemImage] = useState('')
+  const [showText, setShowText] = useState(true)
+  const navigate = useNavigate()
+
+  const [initial, setInitial] = useState({
+    title: '',
+    text: '',
+    tags: '',
+  })
+
+  const uploadPost = async (id) => {
+    setShowText(false)
+    const response = await api.get(`/posts/${id}`)
+
+    const { text, title, imageUrl, tags } = response.data
+    setInitial({ text, title, tags: tags.join('') })
+    setItemImage(imageUrl)
+    setShowText(true)
+    console.log(initial)
+  }
+
+  useEffect(() => {
+    if (id) {
+      uploadPost(id)
+    }
+  }, [])
 
   const inputChangefile = async (e) => {
     try {
@@ -24,7 +44,7 @@ const CreatePost = () => {
 
       const response = await api.post('/upload', formData)
 
-      setItemImage(response.data.url)
+      setItemImage(response.data)
     } catch (error) {
       console.log(error)
     }
@@ -33,21 +53,59 @@ const CreatePost = () => {
     setItemImage('')
   }
 
+  const createPost = async (values) => {
+    const token = localStorage.getItem('token')
+    const tags =
+      values.tags
+        .replace(/ /g, '')
+        .split(/(?=#)/g)
+        .filter((tag) => tag.length >= 2) || []
+    const newPost = await api.post('/posts/create', {
+      ...values,
+      tags: [...new Set(tags)],
+      imageUrl: itemImage,
+      token,
+    })
+    return newPost
+  }
+
+  const updatePost = async (values) => {
+    const token = localStorage.getItem('token')
+    const tags =
+      values.tags
+        .replace(/ /g, '')
+        .split(/(?=#)/g)
+        .filter((tag) => tag.length > 2) || []
+    const newPost = await api.patch(`/posts/update/${id}`, {
+      ...values,
+      tags: [...new Set(tags)],
+      imageUrl: itemImage,
+      token,
+    })
+    return newPost
+  }
+
   return (
     <div>
       <Paper className='flex-col p-[20px] mt-[30px]'>
-        <Typography variant='h4'>Create new product</Typography>
+        <Typography variant='h4'>
+          {!id ? 'Create new post' : 'Edit post'}
+        </Typography>
         <Formik
-          initialValues={{
-            title: '',
-            text: '',
-          }}
+          enableReinitialize
+          initialValues={initial}
           validationSchema={postValidation}
-          onSubmit={async (values, { setSubmitting }) => {
-            const newPost = await api.post('/posts/create', {
-              ...values,
-              imageUrl: itemImage,
-            })
+          onSubmit={async (values, { resetForm }) => {
+            try {
+              const response = id
+                ? await updatePost(values)
+                : await createPost(values)
+
+              resetForm()
+              navigate(`/news/post/${response.data._id}`)
+            } catch (error) {
+              console.log(error)
+            }
           }}
         >
           {({
@@ -55,9 +113,10 @@ const CreatePost = () => {
             errors,
             touched,
             handleChange,
-            handleBlur,
+
             handleSubmit,
             isSubmitting,
+            setFieldValue,
             /* and other goodies */
           }) => (
             <form onSubmit={handleSubmit} className='createUserForm__form'>
@@ -70,22 +129,26 @@ const CreatePost = () => {
                   name='title'
                   onChange={handleChange}
                   value={values.title}
-                  error={Boolean(errors.title)}
-                  helperText={errors.title}
+                  error={YoutubeSearchedFor.title && Boolean(errors.title)}
+                  helperText={touched.title && errors.title}
                 />
                 <TextField
-                  multiline
-                  rows={8}
-                  className='w-[100%] my-[20px]'
+                  className='w-[500px] my-[20px]'
                   size='small'
-                  id='text'
-                  label='text'
-                  name='text'
+                  id='tags'
+                  label='tags'
+                  name='tags'
                   onChange={handleChange}
-                  value={values.text}
-                  error={Boolean(errors.text)}
-                  helperText={errors.text}
+                  value={values.tags}
+                  error={Boolean(errors.tags)}
+                  helperText={errors.tags}
                 />
+              </div>
+              <div className='rounded'>
+                {Boolean(errors.text) && errors.text}
+                {showText && (
+                  <Editor setValue={setFieldValue} defaultText={initial.text} />
+                )}
               </div>
               <Button variant='contained' component='label'>
                 Upload image
@@ -102,7 +165,7 @@ const CreatePost = () => {
                   <Button color='error' onClick={() => removeImage()}>
                     Delete image
                   </Button>
-                  <img src={`http://localhost:5000${itemImage}`} alt='Upload' />
+                  <img src={`${itemImage}`} alt='Upload' />
                 </>
               )}
               <LoadingButton
@@ -113,7 +176,7 @@ const CreatePost = () => {
                 type='submit'
                 loading={isSubmitting}
               >
-                Publish
+                {id ? 'Edit post' : 'Publish'}
               </LoadingButton>
             </form>
           )}

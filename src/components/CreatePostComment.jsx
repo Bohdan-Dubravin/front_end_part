@@ -1,19 +1,18 @@
 import { LoadingButton } from '@mui/lab'
 import { Paper, Rating, TextField, Typography } from '@mui/material'
-import { useState } from 'react'
+
 import { Formik } from 'formik'
 import api from '../api/config'
 import { commentValidation } from '../utils/validtion'
 import { useParams } from 'react-router-dom'
 
-const CreatePostComment = () => {
-  const [itemImage, setItemImage] = useState('')
+const CreatePostComment = ({ getPost }) => {
   const { id } = useParams()
-
+  const token = localStorage.getItem('token')
   return (
     <div>
-      <Paper className='flex-col w-[80%] mx-[auto]  p-[20px] mt-[30px] bg-slate-50'>
-        <Typography variant='h6'>Add comment</Typography>
+      <Paper className='flex-col  mx-[auto]  p-[20px] mt-[30px] bg-slate-50'>
+        <Typography variant='h6'>Add a comment</Typography>
         <Formik
           initialValues={{
             rating: 4,
@@ -24,7 +23,9 @@ const CreatePostComment = () => {
             try {
               await api.post(`/posts/create/comment/${id}`, {
                 ...values,
+                token,
               })
+              getPost()
             } catch (error) {
               console.log(error)
             }
@@ -42,18 +43,22 @@ const CreatePostComment = () => {
           }) => (
             <form onSubmit={handleSubmit} className='createUserForm__form'>
               <div className='flex flex-col'>
-                <Typography variant='body'>Rating</Typography>
-                <Rating
-                  size='small'
-                  value={values.rating}
-                  precision={1}
-                  name='rating'
-                  onChange={handleChange}
-                />
+                <div className='flex align-items: center;'>
+                  <Typography className='mr-[10px]' variant='body'>
+                    Rate post
+                  </Typography>
+                  <Rating
+                    size='small'
+                    value={values.rating}
+                    precision={1}
+                    name='rating'
+                    onChange={handleChange}
+                  />
+                </div>
                 <TextField
                   multiline
-                  rows={4}
-                  className='w-[100%] my-[20px]'
+                  minRows={1}
+                  className='w-[100%] my-[10px]'
                   size='small'
                   variant='standard'
                   id='text'
@@ -66,10 +71,10 @@ const CreatePostComment = () => {
                 />
               </div>
               <LoadingButton
-                size='large'
-                className='block mt-[20px]'
+                size='small'
+                className='block mt-[10px] bg-[#1976D2] text-white hover:bg-[#1976D2] hover:text-white'
                 color='error'
-                variant='outlined'
+                variant='soft'
                 type='submit'
                 loading={isSubmitting}
               >

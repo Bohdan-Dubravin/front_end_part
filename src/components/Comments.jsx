@@ -1,6 +1,5 @@
 import {
   Avatar,
-  Divider,
   List,
   ListItem,
   ListItemAvatar,
@@ -8,43 +7,49 @@ import {
   Rating,
   Typography,
 } from '@mui/material'
-import React from 'react'
+import { Box } from '@mui/system'
 
-const Comments = ({ comments, user }) => {
+const Comments = ({ comments }) => {
   return (
-    <List className='w-[500px]'>
+    <List className=''>
       {comments.map((comment) => {
+        const date = new Date(comment.createdAt.toString())
         return (
           <>
             <ListItem
               key={comment._id}
-              className='relative'
+              className='flex flex-col border-b-2 px-0'
               alignItems='flex-start'
             >
-              <ListItemAvatar>
-                <Avatar alt={user.username} src='/static/images/avatar/1.jpg' />
-              </ListItemAvatar>
-              <ListItemText
-                primary={user.username}
-                secondary={
-                  <Typography
-                    sx={{ display: 'inline' }}
-                    component='span'
-                    variant='body2'
-                    color='text.primary'
-                  >
-                    {comment.text}
-                  </Typography>
-                }
-              />
+              <Box className='flex'>
+                <ListItemAvatar>
+                  <Avatar
+                    alt={comment.author.username}
+                    src={`${comment.author.avatarUrl}`}
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={comment.author.username}
+                  secondary={
+                    <Typography
+                      sx={{ display: 'inline' }}
+                      component='span'
+                      variant='body2'
+                      color='text.primary'
+                    >
+                      {date.toDateString()}
+                    </Typography>
+                  }
+                />
+              </Box>
               <Rating
-                className='absolute top-[16px] right-[30px]'
+                className=''
                 readOnly
                 size='small'
                 value={comment.rating}
               />
+              <Typography>{comment.text}</Typography>
             </ListItem>
-            <Divider variant='inset' component='li' />
           </>
         )
       })}

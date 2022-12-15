@@ -8,28 +8,42 @@ import {
   Typography,
 } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { logoutUser } from '../redux/slices/userSlice'
+import { logoutUser } from '../redux/slices/authSlice'
 
 const AppUser = () => {
   const [showNav, setShowNav] = useState(null)
-  const { role, username, auth, avatarUrl } = useSelector((state) => state.user)
+  const { role, username, auth, avatarUrl, status } = useSelector(
+    (state) => state.user
+  )
+
+  const [isAuth, setIsAuth] = useState(auth)
+
+  useEffect(() => {
+    setIsAuth(auth)
+  }, [status])
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const logout = () => {
+    setIsAuth(false)
     setShowNav(false)
     dispatch(logoutUser())
     navigate('/')
   }
 
+  if (!isAuth) {
+    return
+  }
+
   return (
-    <Box sx={{ flexGrow: 0 }}>
+    <Box className='cursor-pointer' sx={{ flexGrow: 0 }}>
       <Box onClick={(e) => setShowNav(e.currentTarget)}>
         <Tooltip sx={{ p: 0 }} title='Open settings'>
           <IconButton>
-            <Avatar alt={username.slice(0)} src='' />
+            <Avatar alt={username} src={`${avatarUrl}`} />
           </IconButton>
         </Tooltip>
         <ExpandMoreIcon />
@@ -55,11 +69,11 @@ const AppUser = () => {
             Logout
           </Typography>
         </MenuItem>
-        <MenuItem onClick={() => setShowNav(false)}>
-          <Typography className=' font-bold' textAlign='left'>
+        {/* <MenuItem onClick={() => setShowNav(false)}>
+          <Typography className=" font-bold" textAlign="left">
             My posts
           </Typography>
-        </MenuItem>
+        </MenuItem> */}
       </Menu>
     </Box>
   )

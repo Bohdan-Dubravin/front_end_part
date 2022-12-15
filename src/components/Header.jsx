@@ -1,49 +1,37 @@
 import { Button, InputAdornment, TextField } from '@mui/material'
-
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import logo from '../assets/images/logo.svg'
 import SearchIcon from '@mui/icons-material/Search'
-import { useDispatch, useSelector } from 'react-redux'
-import { logoutUser } from '../redux/slices/userSlice'
+import { useSelector } from 'react-redux'
 import AppUser from './AppUser'
+import { useEffect, useState } from 'react'
 const Header = () => {
-  const { role, username, auth } = useSelector((state) => state.user)
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-
-  const logout = async () => {
-    const response = await dispatch(logoutUser())
-    console.log(response)
-
-    if (!auth) {
-      navigate('/')
-    }
-  }
+  const { role, username, auth, status } = useSelector((state) => state.user)
 
   return (
-    <header className='flex items-center justify-between h-[60px] border-b-2'>
-      <Link className='block p-[15px]' to='/'>
+    <header className='flex items-center justify-between  h-[60px] border-b-2'>
+      <Link className='block p-[15px] mr-[20px]' to='/'>
         <img src={logo} alt='logo' />
       </Link>
-      <nav className='flex items-center w-[300px] justify-between'>
-        <NavLink
+      <nav className='flex  items-center w-[150px] justify-between mr-[auto]'>
+        {/* <NavLink
           className={(navData) => (navData.isActive ? 'active' : 'link')}
           to='/desktops'
         >
           Desktop PC
-        </NavLink>
+        </NavLink> */}
         <NavLink
           className={(navData) => (navData.isActive ? 'active' : 'link')}
-          to='/news'
+          to='/'
         >
           News
         </NavLink>
-        <NavLink
+        {/* <NavLink
           className={(navData) => (navData.isActive ? 'active' : 'link')}
-          to='/services'
+          to="/services"
         >
           Services
-        </NavLink>
+        </NavLink> */}
         <NavLink
           className={(navData) => (navData.isActive ? 'active' : 'link')}
           to='/aboutus'
@@ -53,28 +41,29 @@ const Header = () => {
       </nav>
 
       <div className='flex items-center relative'>
-        <TextField
+        {/* <TextField
           className={`rounded-2xl w-[200px] font-semibold transition-all `}
-          id='filled-basic'
-          label='Search'
-          size='small'
+          id="filled-basic"
+          label="Search"
+          size="small"
           InputProps={{
             endAdornment: (
-              <InputAdornment position='end'>
+              <InputAdornment position="end">
                 <SearchIcon />
               </InputAdornment>
             ),
           }}
-        />
+        /> */}
 
         {(role === 'admin' || role === 'manager') && (
-          <Link to='/admin'>
+          <Link to='/admin/posts'>
             <Button
-              className='ml-[16px] font-semibold text-[#fff] bg-[#d32f2f]'
+              size='small'
+              className='mx-[20px] font-semibold text-[#fff] bg-[#d32f2f] mr-[10px]'
               variant='contained'
               color='error'
             >
-              Admin Dash
+              Admin Panel
             </Button>
           </Link>
         )}
@@ -91,7 +80,7 @@ const Header = () => {
         )}
         {!auth ? (
           <Link to='/login'>
-            <Button className='ml-[16px] font-bold bg-sky-500 text-white hover:bg-sky-600'>
+            <Button className='mx-[20px] font-bold bg-sky-500 text-white hover:bg-sky-600'>
               Login
             </Button>
           </Link>

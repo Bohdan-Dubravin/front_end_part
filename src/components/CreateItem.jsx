@@ -135,7 +135,7 @@ const CreateItem = () => {
                   <Button color='error' onClick={() => removeImage()}>
                     Delete image
                   </Button>
-                  <img src={`http://localhost:5000${itemImage}`} alt='Upload' />
+                  <img src={`${itemImage}`} alt='Upload' />
                 </>
               )}
               <LoadingButton

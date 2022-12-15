@@ -1,5 +1,5 @@
 import { Paper, Rating } from '@mui/material'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { getFullItem } from '../redux/slices/itemSlice'
@@ -34,9 +34,7 @@ const FullItem = () => {
     _id,
   } = fullItem
 
-  const imageUrl = Boolean(images.length)
-    ? `http://localhost:5000${images[0]}`
-    : defaultImage
+  const imageUrl = Boolean(images.length) ? `${images[0]}` : defaultImage
 
   return (
     <Paper className='px-[20px] py-[10px] w-[100%] flex-col'>

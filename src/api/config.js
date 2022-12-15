@@ -2,10 +2,13 @@ import axios from 'axios'
 
 const api = axios.create({
   withCredentials: true,
-  baseURL: 'http://localhost:5000',
+  baseURL: process.env.REACT_APP_BASE_URL,
 })
 
 api.interceptors.request.use((config) => {
+  // const token = localStorage.getItem('token')
+  // console.log(config)
+  // config.data.token = token
   config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
   return config
 })
@@ -23,14 +26,18 @@ api.interceptors.response.use(
         !error.config._isRetry
       ) {
         originalRequest._isRetry = true
-        const response = await axios.get(`http://localhost:5000/auth/refresh`, {
-          withCredentials: true,
-        })
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/auth/refresh`,
+          {
+            withCredentials: true,
+          }
+        )
         localStorage.setItem('token', response.data.accessToken)
         return api.request(originalRequest)
       }
     } catch (err) {
       console.log('unauthorised', err)
+      window.location.href = '/login'
     }
     throw error
   }
