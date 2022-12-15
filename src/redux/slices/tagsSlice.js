@@ -8,7 +8,7 @@ export const getTags = createAsyncThunk(
       const response = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/posts/tags`
       )
-      console.log(response)
+
       return response.data
     } catch (error) {
       return rejectWithValue(error.response)
@@ -34,7 +34,6 @@ export const tagsSlice = createSlice({
         state.status = 'error'
       })
       .addCase(getTags.fulfilled, (state, action) => {
-        console.log(action.payload)
         state.status = ''
         state.tags = action.payload
       })

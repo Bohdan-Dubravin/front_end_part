@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import api from '../../api/config'
-
+const token = localStorage.getItem('token')
 export const loginUser = createAsyncThunk(
   '/login',
   async ({ username, password }, { rejectWithValue }) => {
@@ -71,7 +71,7 @@ export const likePost = createAsyncThunk(
   '/likePost',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.post(`/posts/like/${id}`, {
+      const response = await api.post(`/posts/like/${id}`, {token}, {
         withCredentials: true,
       })
 
@@ -87,7 +87,7 @@ export const dislikePost = createAsyncThunk(
   '/dislikePost',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.post(`/posts/dislike/${id}`, {
+      const response = await api.post(`/posts/dislike/${id}`, {token}, {
         withCredentials: true,
       })
 

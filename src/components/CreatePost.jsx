@@ -54,6 +54,7 @@ const CreatePost = () => {
   }
 
   const createPost = async (values) => {
+    const token = localStorage.getItem('token')
     const tags =
       values.tags
         .replace(/ /g, '')
@@ -63,11 +64,13 @@ const CreatePost = () => {
       ...values,
       tags: [...new Set(tags)],
       imageUrl: itemImage,
+      token,
     })
     return newPost
   }
 
   const updatePost = async (values) => {
+    const token = localStorage.getItem('token')
     const tags =
       values.tags
         .replace(/ /g, '')
@@ -77,6 +80,7 @@ const CreatePost = () => {
       ...values,
       tags: [...new Set(tags)],
       imageUrl: itemImage,
+      token,
     })
     return newPost
   }
