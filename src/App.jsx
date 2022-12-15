@@ -30,9 +30,10 @@ function App() {
   }, [])
   return (
     <Container
-      className='p-0 pb-[60px] relative  bg-white min-h-screen'
+      className='p-0 pb-[60px] relative  bg-white min-h-screen '
       maxWidth='lg'
     >
+      <div className='image_body'></div>
       <Header />
       <Routes>
         <Route path='/' element={<News />} />
