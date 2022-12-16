@@ -28,7 +28,6 @@ const CreatePost = () => {
     setInitial({ text, title, tags: tags.join('') })
     setItemImage(imageUrl)
     setShowText(true)
-    console.log(initial)
   }
 
   useEffect(() => {
