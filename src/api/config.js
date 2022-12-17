@@ -23,17 +23,16 @@ api.interceptors.response.use(
         !error.config._isRetry
       ) {
         originalRequest._isRetry = true;
+        const token = localStorage.getItem('token');
         const response = await axios.post(
           `${process.env.REACT_APP_BASE_URL}/auth/refresh`,
-          {
-            withCredentials: true,
-          }
+          { token }
         );
         localStorage.setItem('token', response.data.accessToken);
         return api.request(originalRequest);
       }
     } catch (err) {
-      console.log('unauthorised', err);
+      console.log('unauthorized', err);
       window.location.href = '#/login';
     }
     throw error;
