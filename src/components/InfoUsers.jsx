@@ -19,11 +19,11 @@ import InfoSkeleton from '../Skeletons/InfoSkeleton';
 const InfoUsers = () => {
   const [usersList, setUsersList] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
+  const token = localStorage.getItem('token');
   const getUsers = async () => {
     try {
       setIsLoading(true);
-      const response = await api.get('/auth/users');
+      const response = await api.post('/auth/users', { token });
       setUsersList(response.data);
       setIsLoading(false);
     } catch (error) {
@@ -33,7 +33,7 @@ const InfoUsers = () => {
 
   const deleteUser = async (id) => {
     try {
-      const response = await api.delete(`/auth/delete/${id}`);
+      const response = await api.delete(`/auth/delete/${id}`, token);
 
       if (response.status === 200) {
         getUsers();
@@ -97,9 +97,9 @@ const InfoUsers = () => {
                       </TableCell>
                       <TableCell align="right">{user.role}</TableCell>
                       <TableCell align="right">
-                        <Button onClick={editUser} size="small">
+                        {/* <Button onClick={editUser} size="small">
                           <EditIcon color="primary" />
-                        </Button>
+                        </Button> */}
                         <Button
                           onClick={() => deleteUser(user._id)}
                           size="small"
