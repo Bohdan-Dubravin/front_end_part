@@ -23,7 +23,7 @@ api.interceptors.response.use(
         !error.config._isRetry
       ) {
         originalRequest._isRetry = true;
-        const response = await axios.get(
+        const response = await axios.post(
           `${process.env.REACT_APP_BASE_URL}/auth/refresh`,
           {
             withCredentials: true,
